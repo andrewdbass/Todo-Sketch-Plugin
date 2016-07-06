@@ -1,0 +1,20 @@
+{
+  "name" : "Todo",
+  "identifier" : "com.andrewbassdesign.todo",
+  "description" : "Keep track of Todo items all on one page",
+  "version" : "1.0",
+  "author" : "Andrew Bass",
+  "authorEmail" : "andybass12@gmail.com",
+  "homepage": "",
+  "compatibleVersion": "3.8",
+  "bundleVersion": "1",
+  "commands" : [
+    {
+      "script" : "todo.cocoascript",
+      "handler" : "onRun",
+      "shortcut" : "ctrl t",
+      "name" : "Create Todo",
+      "identifier" : "createTodo"
+    }
+  ]
+}

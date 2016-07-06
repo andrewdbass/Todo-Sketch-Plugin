@@ -1,0 +1,67 @@
+@import "main.js"
+
+function onRun(context) {
+  // Get all the things
+  initPlugin(context);
+  pages = [doc pages]
+  number_pages = [pages count]
+  b = true
+  index = 0
+  for (var i = 0; i < number_pages; i++) {
+  	var p = pages[i]
+    var name = [p name]
+    if (name == "Todo Page"){
+      b = false
+      index = i
+    }
+  }
+  var ySpot;
+  var xSpot
+  if(b){
+    newPage = doc.addBlankPage()
+    newPage.setName('Todo Page')
+    ySpot = 42;
+
+  }
+  else{
+   //So i need to figure out a way to make the second todo item actually get created on the Todo Page
+   //newPage = pages[index]
+   newPage = pages[index]
+  }
+  var sublayers = [newPage layers];
+  for (var i = 0; i < [sublayers count]; i++) {
+    var sublayer = [sublayers objectAtIndex: i];
+    ySpot = sublayer.frame().y() + sublayer.frame().height() + 64 ;
+  }
+  // Load the window
+  var window = createTodo();
+  var alert = window[0];
+
+
+  // When “Ok” is clicked
+  var response = alert.runModal()
+  if (response == "1000") {
+    // Get the user’s values
+    // The replace strips any non-numeric (and non-slash for radius) characters
+    // e.g. `px`
+    var text = textField.stringValue();
+
+
+    var title = MSTextLayer.alloc().initWithFrame_(NSMakeRect(42, ySpot, 300, 300))
+    title.font = NSFont.systemFontOfSize_(24.0)
+    title.stringValue = text
+    title.adjustFrameToFit()
+
+    var rect = MSRectangleShape.alloc().init();
+    rect.frame = MSRect.rectWithRect(NSMakeRect(24, ySpot - 24, title.frame().width() + 42, title.frame().height() + 46));
+    var shapeGroup = MSShapeGroup.shapeWithPath(rect);
+    var fill = shapeGroup.style().addStylePartOfType(0);
+    fill.color = MSColor.colorWithSVGString("#FDF2B6")
+    var shad = shapeGroup.style().addStylePartOfType(2)
+
+    container = MSLayerGroup.new();
+    container.addLayers([shapeGroup, title])
+    container.resizeToFitChildrenWithOption(0)
+    newPage.addLayers_([container])
+  }
+}
